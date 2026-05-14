@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florida Legacy Realty — Directorio de Vendors</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f1f38;
+  --navy2: #1a3055;
+  --gold: #c9a84c;
+  --gold2: #e8c46a;
+  --cream: #f8f5ef;
+  --cream2: #f0ead8;
+  --text: #1a1a1a;
+  --muted: #6b6b6b;
+  --border: #e0d9cc;
+  --green-bg: #e8f5e9; --green-txt: #1b5e20;
+  --amber-bg: #fff8e1; --amber-txt: #e65100;
+  --red-bg:   #fce4ec; --red-txt:   #880e4f;
+  --gray-bg:  #f3f3f3; --gray-txt:  #555;
+  --blue-bg:  #e3f2fd; --blue-txt:  #0d47a1;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+header {
+  background: var(--navy);
+  padding: 1.5rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 3px solid var(--gold);
+}
+.logo-area { display: flex; align-items: center; gap: 14px; }
+.logo-mark {
+  width: 44px; height: 44px; border-radius: 8px;
+  background: var(--gold); display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 16px; color: var(--navy); letter-spacing: .5px;
+}
+.brand-name { color: #fff; font-size: 18px; font-weight: 500; line-height: 1.2; }
+.brand-sub { color: var(--gold); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.header-meta { color: rgba(255,255,255,.45); font-size: 12px; text-align: right; line-height: 1.6; }
+
+.main { max-width: 1400px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+.controls {
+  background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+}
+.ctrl-row2 { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+input, select {
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  padding: 8px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--cream); color: var(--text);
+  width: 100%; outline: none; transition: border-color .15s;
+}
+input:focus, select:focus { border-color: var(--gold); }
+select { cursor: pointer; }
+.ctrl-row2 select { width: auto; min-width: 160px; }
+
+.stats-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.5rem;
+}
+.stat-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 10px;
+  padding: .85rem 1rem; text-align: center;
+}
+.stat-n { font-size: 26px; font-weight: 600; color: var(--navy); line-height: 1; }
+.stat-n.dnu { color: #c0392b; }
+.stat-l { font-size: 11px; color: var(--muted); margin-top: 3px; text-transform: uppercase; letter-spacing: .05em; }
+
+/* Table */
+.table-wrap { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead { background: var(--navy); }
+th {
+  color: rgba(255,255,255,.75); font-weight: 500; font-size: 11px;
+  text-transform: uppercase; letter-spacing: .07em;
+  padding: 11px 14px; text-align: left; white-space: nowrap; cursor: pointer;
+  user-select: none;
+}
+th:hover { color: var(--gold2); }
+th .sort-icon { opacity: .4; margin-left: 4px; font-size: 9px; }
+th.sorted .sort-icon { opacity: 1; color: var(--gold2); }
+
+tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--cream); }
+tbody tr.dnu-row { background: #fff5f5; }
+tbody tr.dnu-row:hover { background: #ffe8e8; }
+
+td { padding: 10px 14px; vertical-align: middle; }
+
+.vendor-name { font-weight: 500; color: var(--navy); font-size: 13px; }
+.vendor-svc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+.city-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; color: var(--navy2); font-weight: 500;
+}
+
+.cat-pill {
+  display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px;
+  background: var(--cream2); color: var(--muted); white-space: nowrap;
+  max-width: 140px; overflow: hidden; text-overflow: ellipsis;
+}
+
+.bbb-pill {
+  display: inline-block; font-size: 10px; padding: 3px 8px; border-radius: 20px; white-space: nowrap; font-weight: 500;
+}
+.bbb-good { background: var(--green-bg); color: var(--green-txt); }
+.bbb-mid  { background: var(--amber-bg); color: var(--amber-txt); }
+.bbb-bad  { background: var(--red-bg);   color: var(--red-txt);   }
+.bbb-na   { background: var(--gray-bg);  color: var(--gray-txt);  }
+
+.g-pill {
+  display: inline-block; font-size: 10px; padding: 3px 8px; border-radius: 20px; white-space: nowrap; font-weight: 500;
+}
+.g-high { background: var(--green-bg); color: var(--green-txt); }
+.g-mid  { background: var(--amber-bg); color: var(--amber-txt); }
+.g-low  { background: var(--red-bg);   color: var(--red-txt);   }
+.g-na   { background: var(--gray-bg);  color: var(--gray-txt);  }
+
+.contact-cell { display: flex; flex-direction: column; gap: 2px; }
+.contact-cell a { color: var(--navy2); text-decoration: none; font-size: 12px; }
+.contact-cell a:hover { color: var(--gold); text-decoration: underline; }
+.contact-cell span { font-size: 12px; color: var(--muted); }
+
+.dnu-flag {
+  display: inline-block; background: #c0392b; color: #fff;
+  font-size: 9px; font-weight: 600; letter-spacing: .06em;
+  padding: 2px 7px; border-radius: 20px; text-transform: uppercase;
+}
+.web-link { color: var(--navy2); font-size: 11px; text-decoration: none; }
+.web-link:hover { color: var(--gold); }
+.notes-cell { font-size: 11px; color: var(--muted); max-width: 180px; line-height: 1.4; }
+
+.no-results { text-align: center; padding: 3rem; color: var(--muted); }
+.no-results svg { display: block; margin: 0 auto 12px; opacity: .3; }
+
+/* Group header row */
+tr.grp-row td {
+  background: var(--navy); color: var(--gold);
+  font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  padding: 8px 14px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .controls { grid-template-columns: 1fr 1fr; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  th:nth-child(n+7), td:nth-child(n+7) { display: none; }
+}
+@media (max-width: 600px) {
+  header { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .controls { grid-template-columns: 1fr; }
+  th:nth-child(n+5), td:nth-child(n+5) { display: none; }
+}
+
+footer {
+  text-align: center; padding: 2rem; color: var(--muted); font-size: 11px;
+  border-top: 1px solid var(--border); background: #fff; margin-top: 0;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <div class="logo-mark">FL</div>
+    <div>
+      <div class="brand-name">Florida Legacy Realty</div>
+      <div class="brand-sub">Directorio de Vendors</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    165 vendors · Florida<br>
+    Uso interno del equipo
+  </div>
+</header>
+
+<div class="main">
+  <div class="controls">
+    <input id="q" type="search" placeholder="🔍  Buscar por nombre, servicio, notas..." />
+    <select id="city"><option value="">📍  Todas las ciudades</option></select>
+    <select id="cat"><option value="">🏷️  Todas las categorías</option></select>
+    <div class="ctrl-row2" style="grid-column:1/-1">
+      <select id="bbb">
+        <option value="">BBB: Todos</option>
+        <option value="good">BBB: A / A+</option>
+        <option value="mid">BBB: B / C+</option>
+        <option value="bad">BBB: C / C- / F</option>
+        <option value="nr">BBB: NR / N/A</option>
+      </select>
+      <select id="goog">
+        <option value="">Google: Todos</option>
+        <option value="high">Google ≥ 4.5 ⭐</option>
+        <option value="med">Google 3.5 – 4.4</option>
+        <option value="low">Google &lt; 3.5</option>
+        <option value="na">Sin rating</option>
+      </select>
+      <select id="dnu">
+        <option value="">Mostrar todos</option>
+        <option value="ok">Excluir DO NOT USE</option>
+        <option value="dnu">Solo DO NOT USE</option>
+      </select>
+      <select id="grp">
+        <option value="city">Agrupar por ciudad</option>
+        <option value="cat">Agrupar por categoría</option>
+        <option value="none">Sin agrupación (A-Z)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-card"><div class="stat-n" id="s-tot">165</div><div class="stat-l">Total vendors</div></div>
+    <div class="stat-card"><div class="stat-n" id="s-vis">165</div><div class="stat-l">Mostrando</div></div>
+    <div class="stat-card"><div class="stat-n dnu" id="s-dnu">1</div><div class="stat-l">Do not use</div></div>
+    <div class="stat-card"><div class="stat-n" id="s-cit">—</div><div class="stat-l">Ciudades</div></div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th data-col="n">Vendor <span class="sort-icon">↕</span></th>
+          <th data-col="city">Ciudad <span class="sort-icon">↕</span></th>
+          <th data-col="cat">Categoría <span class="sort-icon">↕</span></th>
+          <th data-col="bbb">BBB <span class="sort-icon">↕</span></th>
+          <th data-col="google">Google <span class="sort-icon">↕</span></th>
+          <th>Contacto</th>
+          <th>Teléfonos</th>
+          <th>Web</th>
+          <th>Notas</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div id="empty" class="no-results" style="display:none">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Sin resultados para esa búsqueda
+    </div>
+  </div>
+</div>
+
+<footer>Florida Legacy Realty LLC &nbsp;·&nbsp; Uso interno del equipo &nbsp;·&nbsp; Actualizado Mayo 2025</footer>
+
+<script>
+const V=[{"n":"Accurate Ozone Solutions LLC","cat":"Contractors - General","svc":"Repairs","city":"Winter Haven","ph":"(863) 521-4009","ph2":"(863) 696-3506","email":"hughart1@gmail.com","email2":"","contact":"Bruce Hughart","web":"http://www.accurateozone.com","notes":"Owner: Bruce Hughart | Call: 863-400-1948","bbb":"A+ (No Acreditado)","google":"N/A","dnu":false},{"n":"Ace Lock and Key Lakeland","cat":"Locksmith","svc":"Locksmith/Keys","city":"Lakeland","ph":"(863) 602-7648","ph2":"(863) 859-7948","email":"acelockandkeylakeland@gmail.com","email2":"","contact":"Mike","web":"","notes":"","bbb":"A+ (No Acreditado)","google":"5.0/5 (9 reseñas)","dnu":false},{"n":"Adame Pest Solutions Inc","cat":"Contractors - Pest Control","svc":"Pest Control","city":"St. Cloud","ph":"(407) 891-7757","ph2":"(407) 460-2049","email":"","email2":"","contact":"","web":"http://www.adamespestfl.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"ADT Security","cat":"Security","svc":"Safety System","city":"N/A","ph":"","ph2":"","email":"adt@e.adt.com","email2":"","contact":"","web":"https://www.adt.com","notes":"","bbb":"A (Acreditado)","google":"N/A","dnu":false},{"n":"Advanced Electric & Air","cat":"Contractors - HVAC","svc":"AC Maintenance","city":"Ocala","ph":"(352) 414-7599","ph2":"","email":"","email2":"info@advancedelectricfl.com","contact":"","web":"https://advancedelectricfl.com","notes":"","bbb":"A (No Acreditado)","google":"5.0/5 (50 reseñas)","dnu":false},{"n":"Advanced Septic LLC","cat":"Contractors - Septic Tank","svc":"Septic Tank","city":"Groveland","ph":"(352) 242-6100","ph2":"(407) 877-8200","email":"","email2":"info@advancedsepticservicesfl.com","contact":"","web":"https://advancedsepticservicesfl.com","notes":"","bbb":"A+ (No Acreditado)","google":"4.8/5 (45 reseñas)","dnu":false},{"n":"AGR Handyman LLC","cat":"Contractors - Handyman Services","svc":"Handyman","city":"Merritt Island","ph":"(321) 358-6370","ph2":"","email":"vivamv77@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"All About Signs & Service INC","cat":"Signs","svc":"Signs","city":"Lakeland","ph":"(863) 666-3990","ph2":"(863) 665-0875","email":"aasignsfl@yahoo.com","email2":"","contact":"","web":"http://aasignsfl.com","notes":"","bbb":"A+ (No Acreditado)","google":"N/A","dnu":false},{"n":"All Weather Heating and Cooling LLC","cat":"Contractors - HVAC","svc":"HVAC","city":"Ocala","ph":"(352) 867-0019","ph2":"","email":"info@allweatherfl.com","email2":"all-weather@embarqmail.com","contact":"","web":"https://allweatherheatingandcooling.net","notes":"","bbb":"A+ (Acreditado)","google":"4.9/5 (2,959 reseñas)","dnu":false},{"n":"American Fire and Safety Supply LLC","cat":"Contractors - Fire System","svc":"Fire System","city":"Ocala","ph":"(352) 732-5326","ph2":"(800) 733-5326","email":"billing@amfire.org","email2":"Info@amfire.org","contact":"","web":"https://americanfireandsafety.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"American Leak Detection, Inc","cat":"Contractors - Plumbing","svc":"Plumbing / Leak Detection","city":"N/A","ph":"","ph2":"","email":"insurance@americanleakdetection.com","email2":"","contact":"","web":"https://www.americanleakdetection.com","notes":"","bbb":"A+ (Acreditado)","google":"N/A","dnu":false},{"n":"Andrew J Oram Attorney at Law","cat":"Legal","svc":"Legal","city":"Winter Haven","ph":"","ph2":"","email":"","email2":"office@oram.law","contact":"","web":"https://oram.law","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Angel Mania Landscaping LLC","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Winter Springs","ph":"(321) 961-2264","ph2":"","email":"angelmanialandscaping@gmail.com","email2":"","contact":"","web":"https://angelmanialandscaping.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Anthem Home Inspections","cat":"Inspections","svc":"Inspections","city":"N/A","ph":"","ph2":"","email":"info@anthemhomeinspections.com","email2":"","contact":"","web":"https://www.anthemhomeinspections.com","notes":"","bbb":"A+ (No Acreditado)","google":"N/A","dnu":false},{"n":"Arrow Environment Services","cat":"Contractors - Pest Control","svc":"Pest Control","city":"N/A","ph":"","ph2":"","email":"","email2":"","contact":"","web":"https://www.arrowservices.com","notes":"","bbb":"A- (No Acreditado)","google":"N/A","dnu":false},{"n":"Arrow Services","cat":"Contractors - Pest Control","svc":"Pest Control","city":"N/A","ph":"(904) 227-8590","ph2":"(800) 226-3139","email":"mike.remy@rentokil.com","email2":"alexander.nigh@rentokil.com","contact":"","web":"https://www.arrowservices.com","notes":"","bbb":"A- (No Acreditado)","google":"N/A","dnu":false},{"n":"At Home Keys","cat":"Locksmith","svc":"Locksmith/Keys","city":"Orlando","ph":"(407) 332-4777","ph2":"","email":"locksmith@athomekeys.com","email2":"","contact":"","web":"https://www.athomekeys.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Bay Area Air Conditioning INC","cat":"Contractors - HVAC","svc":"AC Maintenance","city":"Crystal River","ph":"(877) 229-2732","ph2":"(352) 795-2665","email":"info@bayareacool.com","email2":"service@bayareacool.com","contact":"","web":"https://bayareacool.com","notes":"","bbb":"A+ (Acreditado)","google":"4.9/5 (5,313 reseñas)","dnu":false},{"n":"BC Products Industries LLC","cat":"Contractors - Septic Tank","svc":"Septic Tank","city":"Cocoa","ph":"(321) 639-0362","ph2":"","email":"bcproducts321@gmail.com","email2":"","contact":"Justin Cowart","web":"https://www.bcproductsindustries.com","notes":"","bbb":"C+","google":"N/A","dnu":false},{"n":"BMG Multiservices LLC","cat":"Contractors - Electrical","svc":"Electrical","city":"Kissimmee","ph":"(407) 780-3723","ph2":"","email":"","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Brick City Plumbing","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Ocala","ph":"(352) 425-8520","ph2":"(352) 449-3538","email":"info@brickcityplumbing.com","email2":"brickcityplumbingfl@gmail.com","contact":"","web":"https://brickcityplumbing.com","notes":"","bbb":"NR","google":"4.9/5 (190 reseñas)","dnu":false},{"n":"Bryan Camara","cat":"Contractors - Handyman Services","svc":"Handyman","city":"N/A","ph":"(407) 768-1065","ph2":"","email":"","email2":"","contact":"Bryan Camara","web":"","notes":"","bbb":"N/A","google":"N/A","dnu":false},{"n":"C & C Carpet Cleaning LLC","cat":"Contractors - Cleaning and Services","svc":"Carpet Cleaning","city":"Inverness","ph":"(352) 726-4052","ph2":"(352) 212-9213","email":"","email2":"","contact":"","web":"https://www.carpetcleaningcitruscounty.com","notes":"","bbb":"A+ (No Acreditado)","google":"5.0/5 (Angi)","dnu":false},{"n":"C & L Solutions of FL LLC","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Kissimmee","ph":"(407) 789-4762","ph2":"","email":"","email2":"","contact":"Jeffrey Baquero","web":"","notes":"Spanish speaker - contact via WhatsApp","bbb":"NR","google":"N/A","dnu":false},{"n":"Calibur Electronix LLC","cat":"Contractors - Appliances","svc":"Appliances","city":"Windermere","ph":"(407) 335-7433","ph2":"(321) 221-5375","email":"caliburelectronix@gmail.com","email2":"","contact":"","web":"https://www.caliburelectronix.com","notes":"","bbb":"NR","google":"4.7/5 (HomeAdvisor)","dnu":false},{"n":"Carmen Pinzon","cat":"Contractors - Cleaning and Services","svc":"Cleaning Services","city":"N/A","ph":"","ph2":"","email":"","email2":"","contact":"Carmen Pinzon","web":"","notes":"","bbb":"N/A","google":"N/A","dnu":false},{"n":"Centaury Specialty Insurance Company","cat":"Insurance","svc":"Insurance","city":"Dallas","ph":"(866) 844-3690","ph2":"","email":"","email2":"","contact":"","web":"https://centauriinsurance.com","notes":"","bbb":"A+ (Acreditado)","google":"N/A","dnu":false},{"n":"Cicero Pools","cat":"Pool Services","svc":"Pool Repairs","city":"Merritt Island","ph":"(321) 328-5364","ph2":"","email":"ciceropools@gmail.com","email2":"","contact":"Jhon Cicero","web":"","notes":"Zelle: 321-795-4572","bbb":"A (Acreditado)","google":"5.0/5 (limitado)","dnu":false},{"n":"CJT Seamless Gutters Construction Corp","cat":"Contractors - Gutters","svc":"Gutters","city":"Orlando","ph":"(407) 885-8888","ph2":"","email":"cjtctcorp@gmail.com","email2":"","contact":"Cesar Torrealba","web":"","notes":"FB & IG: @cjtctcorp","bbb":"NR","google":"4.9/5 (87 reseñas)","dnu":false},{"n":"Clipped To Perfection L.L.C.","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Lecanto","ph":"(352) 212-5603","ph2":"","email":"clippedtoperfection@gmail.com","email2":"","contact":"","web":"https://clippedtoperfection.us","notes":"","bbb":"NR","google":"5.0/5 (54 reseñas)","dnu":false},{"n":"Coast to Coast Heating & Air Conditioning LLC","cat":"Contractors - HVAC","svc":"HVAC","city":"N/A","ph":"","ph2":"(352) 234-4978","email":"","email2":"","contact":"","web":"https://coasttocoastac.com","notes":"","bbb":"A+ (Acreditado)","google":"4.8/5 (1,145 reseñas)","dnu":false},{"n":"Coastal Septic Services Inc","cat":"Contractors - Septic Tank","svc":"Septic Tank","city":"Cocoa","ph":"(321) 632-7909","ph2":"","email":"service@coastalseptic.com","email2":"Billing@coastalseptic.com","contact":"","web":"http://www.coastalseptic.com","notes":"PREFERRED vendor for Cocoa","bbb":"A+ (Acreditado)","google":"3.9/5 (1,161 reseñas)","dnu":false},{"n":"Cody's Junk Removal and Moving","cat":"Contractors - Cleaning and Services","svc":"Junk Removal","city":"Crystal River","ph":"","ph2":"","email":"cody115bo2@gmail.com","email2":"","contact":"","web":"https://www.codysjunkremoval.com","notes":"","bbb":"NR","google":"5.0/5 (limitado)","dnu":false},{"n":"Container Rental Co","cat":"Junk / Trash","svc":"Trash / Dumpster","city":"Orlando","ph":"(407) 919-6747","ph2":"(407) 298-8555","email":"","email2":"","contact":"","web":"http://www.orlandowastepaper.com","notes":"Account: 73499 | Password: 5394","bbb":"NR","google":"N/A","dnu":false},{"n":"Coverall North America Inc.","cat":"Contractors - Cleaning and Services","svc":"Cleaning Services","city":"Ocala","ph":"(352) 369-0777","ph2":"(800) 537-3371","email":"Richard.Waite@coverall.com","email2":"","contact":"Richard Waite","web":"https://www.coverall.com","notes":"","bbb":"No Acreditado","google":"N/A","dnu":false},{"n":"CPO Lawn Services LLC","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Cocoa","ph":"","ph2":"","email":"cpolawnservices@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"CTR Multi Service Inc","cat":"Contractors - Electrical","svc":"Electrical","city":"Clermont","ph":"(407) 625-3273","ph2":"(352) 682-9201","email":"ctrhomeinspector@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"A+ (Acreditado)","google":"N/A","dnu":false},{"n":"Cyan Consultants Inc","cat":"Legal","svc":"Legal","city":"Kissimmee","ph":"","ph2":"","email":"","email2":"contact@cyancinc.com","contact":"","web":"https://cyancinc.com","notes":"","bbb":"NR","google":"5.0/5 (19 reseñas)","dnu":false},{"n":"D & K Gutter Cleaning","cat":"Contractors - Gutters","svc":"Gutter Cleaning","city":"Ocala","ph":"(352) 598-5696","ph2":"","email":"","email2":"learnwithlove8@gmail.com","contact":"","web":"https://www.dandkguttercleaning.com","notes":"","bbb":"A+ (No Acreditado)","google":"5.0/5 (HomeAdvisor)","dnu":false},{"n":"Dan Painting Group LLC","cat":"Contractors - Painting","svc":"Painting / Drywall / Stucco","city":"Orlando","ph":"(786) 354-8762","ph2":"(407) 989-1323","email":"danpainting.group@gmail.com","email2":"","contact":"Daniel Uztaris","web":"https://www.danpaintinggroup.com","notes":"Walls, drywall, stucco, roofing","bbb":"A+ (Acreditado)","google":"4.9/5 (reseñas)","dnu":false},{"n":"Daniel Pirela","cat":"Contractors - Handyman Services","svc":"Handyman","city":"Orlando","ph":"","ph2":"","email":"","email2":"","contact":"","web":"","notes":"","bbb":"N/A","google":"N/A","dnu":false},{"n":"Deeman's Property Maintenance and Cleaning","cat":"Contractors - Cleaning and Services","svc":"Cleaning Services","city":"Winter Haven","ph":"","ph2":"","email":"info.deemans@gmail.com","email2":"","contact":"","web":"https://deemans.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Diamond Landscape Solutions, LLC","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Deltona","ph":"(386) 215-6736","ph2":"","email":"diamondlandscapesolutionsllc@gmail.com","email2":"","contact":"","web":"https://diamondlandscapesolutionsfl.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Duke Energy","cat":"Utilities","svc":"Electricity","city":"N/A","ph":"(800) 700-8744","ph2":"(800) 521-2232","email":"","email2":"","contact":"","web":"https://www.duke-energy.com","notes":"","bbb":"A+ (No Acreditado)","google":"N/A","dnu":false},{"n":"ECO SHIELD PEST SOLUTIONS","cat":"Contractors - Pest Control","svc":"Pest Control","city":"Tampa","ph":"(813) 576-1311","ph2":"(888) 744-1284","email":"tampa@theshieldco.com","email2":"","contact":"","web":"https://www.ecoshieldpest.com","notes":"","bbb":"C-","google":"4.0/5 (mixto)","dnu":false},{"n":"El Plomero Latino","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Orlando","ph":"(407) 362-7654","ph2":"","email":"","email2":"elplomerolatino@gmail.com","contact":"","web":"https://elplomerolatino.com","notes":"$39 service call","bbb":"A+ (Acreditado)","google":"4.8/5 (900+ reseñas)","dnu":false},{"n":"Enchanted Landscaping","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Davenport","ph":"(407) 556-4769","ph2":"","email":"projects@enchantedlcp.com","email2":"","contact":"","web":"https://enchantedlcp.com","notes":"","bbb":"A- (No Acreditado)","google":"5.0/5 (limitado)","dnu":false},{"n":"Ener-G Heating and Air LLC","cat":"Contractors - HVAC","svc":"HVAC","city":"Belleview","ph":"(352) 547-7028","ph2":"(352) 843-7601","email":"","email2":"","contact":"","web":"https://ener-g-ac.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"ETI Financial Corporation","cat":"Insurance","svc":"Insurance","city":"Pembroke Pines","ph":"(954) 510-8008","ph2":"(954) 510-8042","email":"","email2":"","contact":"","web":"https://etifinance.com","notes":"","bbb":"B-","google":"N/A","dnu":false},{"n":"Excel Fire Protection Inc","cat":"Contractors - Fire System","svc":"Fire Sprinkler System","city":"Winter Garden","ph":"(407) 614-8347","ph2":"","email":"hugh@excelfp.com","email2":"","contact":"Hugh Ebner","web":"http://excelfp.com","notes":"No W9 needed. Pay with CC no fee","bbb":"NR","google":"N/A","dnu":false},{"n":"Fast Air Repair, LLC","cat":"Contractors - HVAC","svc":"AC Repairs","city":"Ocala","ph":"(352) 234-4701","ph2":"(352) 292-8576","email":"jen@callfastair.com","email2":"","contact":"","web":"https://www.callfastair.com","notes":"","bbb":"Acreditado","google":"4.9/5 (700+ reseñas)","dnu":false},{"n":"Fire Pros Commercial Service","cat":"Contractors - Fire System","svc":"Fire System","city":"Lakeland","ph":"(863) 400-3473","ph2":"","email":"","email2":"","contact":"","web":"https://fireproscs.com","notes":"","bbb":"A+ (Acreditado)","google":"5.0/5 (limitado)","dnu":false},{"n":"Flash Locksmith","cat":"Locksmith","svc":"Locksmith/Keys","city":"Lecanto","ph":"(352) 342-2383","ph2":"(352) 352-1557","email":"info@flashlocksmith.com","email2":"","contact":"Luis Viruet","web":"https://www.flashlocksmithus.com/","notes":"","bbb":"NR","google":"4.9/5 (1,000+ reseñas)","dnu":false},{"n":"Flod Services LLC","cat":"Contractors - General","svc":"Repairs","city":"Longwood","ph":"(407) 951-8632","ph2":"(689) 500-2260","email":"flodservices@gmail.com","email2":"","contact":"","web":"https://flodservices.com","notes":"","bbb":"A+ (Acreditado)","google":"5.0/5 (~50 reseñas)","dnu":false},{"n":"Florida AC Repairs INC","cat":"Contractors - HVAC","svc":"HVAC","city":"Lakeland","ph":"(863) 617-2290","ph2":"","email":"floridaacrepair1@gmail.com","email2":"","contact":"","web":"","notes":"Zelle: floridaacrepair1@gmail.com","bbb":"NR","google":"N/A","dnu":false},{"n":"Florida Pest Control","cat":"Contractors - Pest Control","svc":"Pest Control","city":"Ocala","ph":"(352) 694-2101","ph2":"(352) 290-5248","email":"s.bozeman@flapest.com","email2":"","contact":"","web":"https://www.flapest.com","notes":"","bbb":"B-","google":"4.8/5 (598 reseñas)","dnu":false},{"n":"Florida Power and Light (FPL)","cat":"Utilities","svc":"Electricity","city":"Miami","ph":"(800) 375-2434","ph2":"(305) 552-2950","email":"","email2":"","contact":"","web":"https://www.fpl.com","notes":"","bbb":"A+ (Acreditado)","google":"1.4/5 (Trustpilot)","dnu":false},{"n":"Florida's Home Team Services","cat":"Contractors - General","svc":"Repairs","city":"Davenport","ph":"(407) 300-6066","ph2":"","email":"floridashometeam@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Four Corners Pool Services","cat":"Pool Services","svc":"Pool Repairs","city":"Kissimmee","ph":"(951) 760-6946","ph2":"","email":"grayland@fourcornerspoolservices.com","email2":"","contact":"","web":"https://www.fourcornerspoolservices.com","notes":"","bbb":"NR","google":"5.0/5 (Angi)","dnu":false},{"n":"Frank Gay Services","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Orlando","ph":"(407) 848-3617","ph2":"(407) 293-2642","email":"","email2":"complaints@frankgayservices.com","contact":"","web":"https://frankgayservices.com","notes":"","bbb":"A+ (Acreditado)","google":"4.6/5 (8,881 reseñas)","dnu":false},{"n":"FV Solutions Group LLC","cat":"Contractors - Roof","svc":"Roofing","city":"Saint Cloud","ph":"(786) 474-7897","ph2":"","email":"accounting@fvsolutionsgroup.com","email2":"","contact":"","web":"https://fvsolutionsgroup.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Gabriel Pagan","cat":"Contractors - Electrical","svc":"Electrical","city":"Ocala","ph":"(352) 292-2512","ph2":"","email":"","email2":"","contact":"Gabriel Pagan","web":"","notes":"Pending W9, license & insurance","bbb":"N/A","google":"N/A","dnu":false},{"n":"Garage Door Dorks","cat":"Contractors - General","svc":"Garage Doors","city":"Cocoa","ph":"(321) 462-0071","ph2":"","email":"joshua@garagedoordorks.com","email2":"","contact":"Joshua","web":"https://garagedoordorks.com","notes":"","bbb":"A+ (CA)","google":"N/A","dnu":false},{"n":"GFL","cat":"Waste Disposal","svc":"Waste Disposal","city":"N/A","ph":"","ph2":"","email":"abigailgomez@gflenv.com","email2":"info@gflenv.com","contact":"Abigail Gomez","web":"https://gflenv.com","notes":"Dispatch coordinator","bbb":"No Acreditado","google":"1.0/5 (varios)","dnu":false},{"n":"Graphics Direct","cat":"Signs","svc":"Signs","city":"Minneola","ph":"(352) 432-3996","ph2":"","email":"ray@graphicsfl.com","email2":"Art@GraphicsFL.com","contact":"","web":"https://www.graphicsfl.com","notes":"","bbb":"NR","google":"5.0/5 (estimado)","dnu":false},{"n":"GrassHopper","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Deland","ph":"(407) 548-4006","ph2":"","email":"customersupport@ghlawns.com","email2":"","contact":"","web":"https://ghlawns.com","notes":"","bbb":"No Acreditado","google":"5.0/5 (estimado)","dnu":false},{"n":"Greedys Landscaping LLC","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Orlando","ph":"(407) 914-0670","ph2":"(407) 577-8866","email":"greedyslandcaping@gmail.com","email2":"","contact":"","web":"greedyslandscapingllc.com","notes":"BBB: F — LLC disuelto","bbb":"F ⚠️","google":"N/A","dnu":false},{"n":"Green for Life","cat":"Utilities","svc":"Trash","city":"N/A","ph":"(800) 535-9533","ph2":"(844) 464-3587","email":"","email2":"info@gflenv.com","contact":"","web":"https://gflenv.com","notes":"","bbb":"NR","google":"1.5/5 (Comparably)","dnu":false},{"n":"Handybenny LLC","cat":"Contractors - Handyman Services","svc":"Handyman","city":"Winter Haven","ph":"(863) 210-0194","ph2":"","email":"handybennyllc@gmail.com","email2":"","contact":"","web":"handybennyllc.com","notes":"","bbb":"NR","google":"5.0/5 (3 reseñas)","dnu":false},{"n":"Heart Plumbing LLC","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Dunnellon","ph":"(352) 718-0588","ph2":"","email":"tyler@heartplumbingcares.com","email2":"","contact":"","web":"heartplumbingcares.com","notes":"","bbb":"A+ (Acreditado)","google":"5.0/5 (94+ reseñas)","dnu":false},{"n":"HERVEC Garage Doors LLC","cat":"Contractors - General","svc":"Garage Doors","city":"Kissimmee","ph":"(407) 962-8855","ph2":"","email":"hervecmygarage@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"HG Integral Services LLC","cat":"Contractors - General","svc":"Repairs","city":"Orlando","ph":"(786) 665-4065","ph2":"","email":"hgintegralsvcs@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"HomeTeam Pest Defense INC","cat":"Contractors - Pest Control","svc":"Pest Control","city":"Winter Garden","ph":"(407) 656-2808","ph2":"(877) 461-7378","email":"Deano.DiPisa@PestDefense.com","email2":"Social@PestDefense.com","contact":"","web":"https://pestdefense.com","notes":"","bbb":"A+ (Acreditado)","google":"4.8/5 (475 reseñas)","dnu":false},{"n":"Hull & Company LLC","cat":"Insurance","svc":"Insurance","city":"St. Petersburg","ph":"(727) 561-4855","ph2":"(800) 727-4855","email":"","email2":"submissions@hulltampabay.com","contact":"","web":"hulltampabay.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Hurricane Landscaping & Tree Trimming","cat":"Contractors - Landscaping","svc":"Landscaping / Tree Trimming","city":"Casselberry","ph":"(321) 277-0603","ph2":"","email":"hurricanelandscaping@outlook.com","email2":"","contact":"","web":"hltnt.com","notes":"","bbb":"A+ (Acreditado)","google":"N/A","dnu":false},{"n":"HWW Attorneys at Law","cat":"Legal","svc":"Legal and Professional Fees","city":"N/A","ph":"","ph2":"","email":"","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Hygienic Air Inc","cat":"Contractors - HVAC","svc":"AC Maintenance","city":"Groveland","ph":"(352) 801-2788","ph2":"","email":"info@hygienicairplus.com","email2":"","contact":"","web":"hygienicairplus.com","notes":"","bbb":"A+ (Acreditado)","google":"5.0/5 (2,000+ reseñas)","dnu":false},{"n":"J&S Plumbing Inc","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Tampa","ph":"(813) 655-6688","ph2":"(813) 272-5600","email":"Service@JSplumbinginc.com","email2":"","contact":"","web":"https://jsplumbinginc.com","notes":"","bbb":"A+ (No Acreditado)","google":"4.9/5 (276 reseñas)","dnu":false},{"n":"James Woodman","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Crystal River","ph":"","ph2":"","email":"jew173@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"N/A","google":"N/A","dnu":false},{"n":"JJAT Smart Security LLC","cat":"Security","svc":"Security Systems","city":"Melbourne","ph":"(407) 967-5246","ph2":"","email":"jjatss2017@gmail.com","email2":"","contact":"Jairo Guevara","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Jose Osorio","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Cocoa","ph":"(321) 652-1162","ph2":"","email":"","email2":"","contact":"","web":"","notes":"","bbb":"N/A","google":"N/A","dnu":false},{"n":"Juan Suarez","cat":"Contractors - HVAC","svc":"AC Maintenance","city":"N/A","ph":"(407) 750-2727","ph2":"","email":"","email2":"","contact":"Juan Suarez","web":"","notes":"No trabajado aun (03/2024)","bbb":"N/A","google":"N/A","dnu":false},{"n":"Judy Guzman","cat":"Contractors - Cleaning and Services","svc":"Cleaning Services","city":"Lakeland","ph":"(863) 500-3117","ph2":"","email":"judyguzman13@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"N/A","google":"N/A","dnu":false},{"n":"Kava Interiors Design LLC","cat":"Contractors - General","svc":"Interior Design / General","city":"Kissimmee","ph":"","ph2":"","email":"","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Kings III Emergency Communications","cat":"Contractors - Elevator","svc":"Elevator Emergency","city":"Coppell","ph":"(972) 906-7095","ph2":"(800) 393-5858","email":"lbenavides@kingsiii.com","email2":"message@kingsiii.com","contact":"","web":"https://www.kingsiii.com","notes":"","bbb":"A+ (Acreditado)","google":"N/A","dnu":false},{"n":"Kings of Kings Plumbing LLC","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Homosassa Springs","ph":"(352) 476-4000","ph2":"","email":"kingofkingsplumbing@gmail.com","email2":"","contact":"Nathan Scott","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Lakeland IT","cat":"Suppliers - Software","svc":"IT / Software","city":"Lakeland","ph":"(863) 430-2437","ph2":"","email":"john@lakelandit.com","email2":"","contact":"","web":"https://lakelandit.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Lane Electronics & Alarm System","cat":"Contractors - Fire System","svc":"Fire / Alarm System","city":"Winter Park","ph":"(407) 299-6070","ph2":"(407) 539-1005","email":"carol@laneelectronics.com","email2":"info@laneelectronics.com","contact":"","web":"https://laneelectronics.com","notes":"","bbb":"A+ (No Acreditado)","google":"4.8/5 (42 reseñas)","dnu":false},{"n":"Lapin Septic Tank Service Inc","cat":"Contractors - Septic Tank","svc":"Septic Tank","city":"Orlando","ph":"(407) 841-8200","ph2":"(407) 499-0284","email":"","email2":"centraldispatch@lapinservices.com","contact":"","web":"https://lapinservices.com","notes":"","bbb":"A+ (Acreditado)","google":"4.9/5 (1,004 reseñas)","dnu":false},{"n":"Legacy Maintenance and Multiservices LLC","cat":"Contractors - Handyman Services","svc":"Handyman / General","city":"St. Cloud","ph":"","ph2":"","email":"","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Little's Services LLC","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Ocala","ph":"(330) 260-1975","ph2":"","email":"littlesservices21@gmail.com","email2":"","contact":"","web":"littlesservices.jobbersites.com","notes":"Zelle: 330-260-1975","bbb":"A+ (No Acreditado)","google":"5.0/5 (Thumbtack)","dnu":false},{"n":"LM Clean and Cool LLC","cat":"Contractors - HVAC","svc":"HVAC","city":"Saint Cloud","ph":"(407) 801-1759","ph2":"(407) 606-6500","email":"luis.marquez@acbelow.com","email2":"","contact":"","web":"https://acbelow.com","notes":"","bbb":"NR","google":"5.0/5 (7 reseñas)","dnu":false},{"n":"Lock Genie","cat":"Locksmith","svc":"Locksmith/Keys","city":"Ocala","ph":"(352) 631-8398","ph2":"(352) 310-8255","email":"lockgenieusa@gmail.com","email2":"","contact":"","web":"https://thelockgenie.com","notes":"","bbb":"NR","google":"5.0/5 (100+ reseñas)","dnu":false},{"n":"Lowe's Home Centers LLC","cat":"Suppliers - Materials","svc":"Hardware / Materials","city":"Lakeland","ph":"(863) 701-9800","ph2":"(800) 445-6937","email":"","email2":"","contact":"","web":"https://www.lowes.com","notes":"","bbb":"A+ (Acreditado)","google":"4.1/5 (Lakeland)","dnu":false},{"n":"Lun Air Inc","cat":"Contractors - HVAC","svc":"HVAC","city":"Orlando","ph":"(407) 394-7014","ph2":"","email":"lunair2016@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Luxe Landscapes LLC","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Lecanto","ph":"(352) 601-6515","ph2":"(352) 699-5699","email":"","email2":"admin@luxe-landscapes.com","contact":"","web":"https://luxe-landscapes.com","notes":"","bbb":"A+ (No Acreditado)","google":"4.8/5 (estimado)","dnu":false},{"n":"Massey Green Up Landscape Services","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Orlando","ph":"(888) 262-7739","ph2":"(407) 645-2500","email":"wecare@masseyservices.com","email2":"","contact":"","web":"https://masseyservices.com","notes":"","bbb":"A- (No Acreditado)","google":"4.7/5 (257 reseñas)","dnu":false},{"n":"Massey Services, Inc.","cat":"Contractors - Pest Control","svc":"Pest Control","city":"Orlando","ph":"(407) 601-8309","ph2":"(407) 645-2500","email":"SSantiago@masseyservices.com","email2":"","contact":"","web":"https://masseyservices.com","notes":"","bbb":"A- (No Acreditado)","google":"4.7/5 (26,869 reseñas)","dnu":false},{"n":"Meeks Water Treatment Inc","cat":"Contractors - Water Treatment","svc":"Water Treatment","city":"Crystal River","ph":"","ph2":"","email":"meekswatertreatment@gmail.com","email2":"","contact":"","web":"https://meekswatertreatment.com","notes":"","bbb":"NR","google":"3.9/5 (55 reseñas)","dnu":false},{"n":"Metro Electric of Central Florida LLC","cat":"Contractors - Electrical","svc":"Electrical","city":"Saint Cloud","ph":"(407) 953-2891","ph2":"","email":"","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Mr Appliance of Lakeland","cat":"Contractors - Appliances","svc":"Appliances","city":"Lakeland","ph":"(863) 226-5085","ph2":"(863) 270-3430","email":"lakeland@mrappliance.com","email2":"","contact":"","web":"https://mrappliance.com/lakeland/","notes":"","bbb":"NR","google":"4.5/5 (aprox.)","dnu":false},{"n":"Mr Electric","cat":"Contractors - Electrical","svc":"Electrical","city":"Crystal River","ph":"(352) 794-7368","ph2":"(352) 400-4537","email":"","email2":"","contact":"","web":"https://mrelectric.com/citrus-and-marion-county/","notes":"","bbb":"C+","google":"4.9/5 (Angi)","dnu":false},{"n":"Mr Rooter Plumbing","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Crystal River","ph":"(352) 794-1007","ph2":"(352) 794-3864","email":"","email2":"","contact":"","web":"https://www.mrrooter.com/crystal-river/","notes":"","bbb":"A","google":"4.8/5 (333 reseñas)","dnu":false},{"n":"Mr. Electric","cat":"Contractors - Electrical","svc":"Electrical","city":"Ocala","ph":"(352) 794-7368","ph2":"(352) 400-4537","email":"mrelectric77@yahoo.com","email2":"","contact":"","web":"https://mrelectric.com/citrus-and-marion-county/","notes":"Bobby Electrician: 407-585-9830","bbb":"C+","google":"4.9/5 (Angi)","dnu":false},{"n":"Mud Brothers Citrus LLC","cat":"Contractors - Landscaping","svc":"Land Clearing","city":"Crystal River","ph":"(352) 770-2837","ph2":"(443) 690-1240","email":"admin@mudbrotherscitrus.com","email2":"","contact":"","web":"https://www.mudbrotherscitrus.com","notes":"","bbb":"A+ (No Acreditado)","google":"4.7/5 (378 reseñas)","dnu":false},{"n":"Najera Landscaping","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Haines City","ph":"(853) 852-5427","ph2":"","email":"najeralandscaping2121@gmail.com","email2":"","contact":"","web":"https://najeralandscaping-llc.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"NF Eco Services LLC","cat":"Contractors - Landscaping","svc":"Landscaping","city":"N/A","ph":"","ph2":"(228) 205-8051","email":"","email2":"Info@nfecoservices.com","contact":"","web":"https://www.nfecoservices.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Ocala Handyman LLC","cat":"Contractors - Handyman Services","svc":"Handyman","city":"Ocala","ph":"(321) 219-9069","ph2":"","email":"stephen@bestocalahandyman.com","email2":"","contact":"","web":"bestocalahandyman.com","notes":"DO NOT USE AGAIN","bbb":"NR","google":"N/A","dnu":true},{"n":"Orlando Emergency Signal","cat":"Contractors - Fire System","svc":"Fire / Alarm System","city":"Orlando","ph":"","ph2":"","email":"","email2":"","contact":"","web":"https://orlandoemergencysignal.com","notes":"","bbb":"A+ (Acreditado)","google":"4.8/5 (50 reseñas)","dnu":false},{"n":"Orlando Leak Detection","cat":"Contractors - Plumbing","svc":"Leak Detection","city":"Orlando","ph":"","ph2":"","email":"","email2":"","contact":"","web":"https://www.orlandoflleakdetection.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Pablo Osorio","cat":"Contractors - Landscaping","svc":"Landscaping","city":"N/A","ph":"","ph2":"","email":"","email2":"","contact":"","web":"","notes":"","bbb":"N/A","google":"N/A","dnu":false},{"n":"Palma Cleaning Florida LLC","cat":"Contractors - Cleaning and Services","svc":"Cleaning Services","city":"Lecanto","ph":"(352) 764-4747","ph2":"","email":"hello@palmacleaningco.com","email2":"","contact":"Gary Sanchez","web":"https://palmacleaningco.com","notes":"","bbb":"A- (No Acreditado)","google":"5.0/5 (20-30 est.)","dnu":false},{"n":"Paradise Lawn Care by Kevin Grzybowski","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Summerfield","ph":"(352) 553-3553","ph2":"(352) 245-5260","email":"paradiselawncarebykevin@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Paragon Pool Repairs LLC","cat":"Pool Services","svc":"Pool Repairs","city":"Clermont","ph":"(352) 497-9470","ph2":"(352) 394-7549","email":"evie@paragonpoolrepairs.com","email2":"info@paragonpoolrepairs.com","contact":"","web":"https://www.paragonpoolrepairs.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Patrick H ETZ","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Cocoa","ph":"(321) 446-0360","ph2":"","email":"safaririck1@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"N/A","google":"N/A","dnu":false},{"n":"Performance Roofing","cat":"Contractors - Roof","svc":"Roofing","city":"Oviedo","ph":"(407) 210-1503","ph2":"","email":"info@performanceroofingusa.com","email2":"","contact":"","web":"http://www.performanceroofingusa.com","notes":"NARPM referral - never used","bbb":"A+ (Acreditado)","google":"4.5/5 (Angi/Yelp)","dnu":false},{"n":"Pierce Building Services INC","cat":"Contractors - Roof","svc":"Roofing / Pressure Washing","city":"Orlando","ph":"(407) 489-7619","ph2":"(407) 568-1621","email":"piercebuildingservices@gmail.com","email2":"","contact":"","web":"http://PierceBuildingServices.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Prestige Plumbing & Backflow Services LLC","cat":"Contractors - Plumbing","svc":"Plumbing / Backflow Test","city":"Deland","ph":"","ph2":"","email":"delandplumber@gmail.com","email2":"","contact":"","web":"https://delandplumber.com","notes":"","bbb":"NR","google":"4.8/5 (112 reseñas)","dnu":false},{"n":"Prominent View Landscape and Design LLC","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Lakeland","ph":"(813) 394-2098","ph2":"","email":"sales@prominentview.com","email2":"","contact":"Gumaro (Owner)","web":"https://prominentview.com","notes":"","bbb":"NR","google":"5.0/5 (19 est.)","dnu":false},{"n":"Pye Barker Fire & Safety","cat":"Contractors - Fire System","svc":"Fire / Safety","city":"Ocala","ph":"(352) 732-5326","ph2":"(352) 368-2220","email":"","email2":"","contact":"","web":"https://pyebarkerfs.com","notes":"","bbb":"A+ (Acreditado)","google":"N/A","dnu":false},{"n":"Reliable Paving","cat":"Contractors - Paving","svc":"Paving","city":"Homosassa","ph":"(603) 204-4663","ph2":"","email":"reliablepavingfla@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Reliance Air","cat":"Contractors - HVAC","svc":"HVAC","city":"Longwood","ph":"(407) 504-1379","ph2":"","email":"info@relianceair.biz","email2":"","contact":"","web":"https://relianceair.com","notes":"","bbb":"A+ (No Acreditado)","google":"N/A","dnu":false},{"n":"Rize Elevator LLC","cat":"Contractors - Elevator","svc":"Elevator","city":"Lake Mary","ph":"(407) 445-8144","ph2":"","email":"rize.elevator@outlook.com","email2":"","contact":"","web":"https://rizeelevator.com","notes":"","bbb":"A+ (No Acreditado)","google":"5.0/5 (25 reseñas)","dnu":false},{"n":"Rob's Septic Tank","cat":"Contractors - Septic Tank","svc":"Septic Tank","city":"Clermont","ph":"(352) 394-3114","ph2":"","email":"robsseptic@yahoo.com","email2":"","contact":"","web":"https://robsseptictanks.com","notes":"","bbb":"A+ (Acreditado)","google":"4.9/5 (300+ reseñas)","dnu":false},{"n":"Roberto Pagan","cat":"Contractors - Handyman Services","svc":"Handyman","city":"N/A","ph":"","ph2":"","email":"","email2":"","contact":"","web":"","notes":"","bbb":"N/A","google":"N/A","dnu":false},{"n":"Roto Rooter Plumbing & Drain Service","cat":"Contractors - Plumbing","svc":"Plumbing / Drain","city":"Deland","ph":"","ph2":"(386) 574-7100","email":"","email2":"rotorooterdelandfl@gmail.com","contact":"","web":"https://rotorooter.com/delandfl","notes":"","bbb":"B- (No Acreditado)","google":"4.6/5 (308 reseñas)","dnu":false},{"n":"Royal Greenexpert Landscapers Inc","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Ocoee","ph":"(407) 230-7574","ph2":"","email":"royalgreenhector@aol.com","email2":"","contact":"Hector (Owner)","web":"","notes":"Contactar via WhatsApp","bbb":"NR","google":"N/A","dnu":false},{"n":"Rubens Lawns LLC","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Mulberry","ph":"(863) 458-1986","ph2":"","email":"rubenr863@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Rupertan","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Eagle Lake","ph":"","ph2":"(863) 328-3863","email":"jgonzalez@rupertan.com","email2":"info@rupertan.com","contact":"","web":"https://rupertan.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Sanisafe Services LLC","cat":"Contractors - Plumbing","svc":"Backflow Test","city":"Leesburg","ph":"","ph2":"","email":"","email2":"","contact":"","web":"https://sanisafeservices.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"SC Sliding Door Repair","cat":"Sliding Doors","svc":"Sliding Door Repair","city":"Orlando","ph":"(407) 499-5575","ph2":"(689) 500-8628","email":"scslidingdoorrepair@gmail.com","email2":"","contact":"","web":"https://scslidingdoorrepair.com","notes":"","bbb":"NR","google":"5.0/5 (11 - Yelp)","dnu":false},{"n":"Sherwin-Williams","cat":"Contractors - Painting","svc":"Paint Supplies","city":"Orlando","ph":"","ph2":"(407) 859-4260","email":"","email2":"","contact":"","web":"https://sherwin-williams.com","notes":"","bbb":"A- (No Acreditado)","google":"4.0-4.5/5 (varía)","dnu":false},{"n":"Sir Charles Appliance Repair","cat":"Contractors - Appliances","svc":"Appliances","city":"Orlando","ph":"(407) 859-8050","ph2":"","email":"sircharlesappliance@gmail.com","email2":"","contact":"","web":"https://sircharlesrepair.com","notes":"","bbb":"A+ (No Acreditado)","google":"3.9/5 (Angi)","dnu":false},{"n":"Space Coast Septic Inspections","cat":"Contractors - Septic Tank","svc":"Septic Inspections","city":"Cocoa","ph":"","ph2":"(321) 626-4854","email":"","email2":"","contact":"","web":"https://spacecoastseptic.com","notes":"","bbb":"NR","google":"5.0/5 (Yelp, 2)","dnu":false},{"n":"Spectrum","cat":"Utilities","svc":"Internet","city":"N/A","ph":"(866) 519-1263","ph2":"(833) 267-6094","email":"","email2":"","contact":"","web":"https://spectrum.com","notes":"","bbb":"No Acreditado","google":"3.4/5 (Trustpilot)","dnu":false},{"n":"Stanley Steemer","cat":"Contractors - Cleaning and Services","svc":"Carpet / Floor Cleaning","city":"Inverness","ph":"","ph2":"1-800-783-3637","email":"","email2":"","contact":"","web":"https://stanleysteemer.com","notes":"","bbb":"B- (No Acreditado)","google":"4.6/5 (Angi)","dnu":false},{"n":"Superior Spray Service Inc","cat":"Contractors - Pest Control","svc":"Pest Control","city":"Eaton Park","ph":"(863) 682-0700","ph2":"","email":"superiorsprayoffice@gmail.com","email2":"","contact":"","web":"https://superiorspray.com","notes":"","bbb":"NR","google":"4.8/5 (agregado)","dnu":false},{"n":"Tampa Electric Company (TECO)","cat":"Utilities","svc":"Electricity","city":"Tampa","ph":"","ph2":"(863) 298-6016","email":"","email2":"","contact":"","web":"https://tampaelectric.com","notes":"","bbb":"No Acreditado","google":"1.6/5 (sitios consumidor)","dnu":false},{"n":"TK Elevator Corporation","cat":"Contractors - Elevator","svc":"Elevator","city":"Atlanta","ph":"(813) 230-7386","ph2":"1-844-427-5461","email":"Colin.Hines@tkelevator.com","email2":"","contact":"","web":"https://tkelevator.com","notes":"","bbb":"No Acreditado","google":"1.2/5 (Trustpilot, 297)","dnu":false},{"n":"Tom & Jerry's Pest Control INC","cat":"Contractors - Pest Control","svc":"Pest Control","city":"Titusville","ph":"(321) 267-5272","ph2":"(321) 268-4932","email":"Info@tomandjerryspestcontrol.com","email2":"","contact":"","web":"https://tomandjerryspestcontrol.com","notes":"","bbb":"A+ (No Acreditado)","google":"4.5/5 (41 reseñas)","dnu":false},{"n":"Top Flight Electric","cat":"Contractors - Electrical","svc":"Electrical","city":"Winter Haven","ph":"(863) 229-5150","ph2":"(863) 733-0009","email":"","email2":"clientservices@topflightelectric.com","contact":"","web":"https://topflightelectric.com","notes":"","bbb":"Acreditado","google":"4.9/5 (204 reseñas)","dnu":false},{"n":"Top Knotch Stucco & Stone LLC","cat":"Contractors - General","svc":"Stucco / Stone","city":"N/A","ph":"","ph2":"","email":"topknotchstucco@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Towne Center Insurance Agency Inc","cat":"Insurance","svc":"Insurance","city":"Lake Mary","ph":"","ph2":"(407) 304-4700","email":"chris@tcia.us","email2":"","contact":"","web":"https://townecenterinsurance.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Travelectric Inc","cat":"Contractors - Electrical","svc":"Electrical","city":"Orlando","ph":"(407) 780-3723","ph2":"","email":"","email2":"","contact":"Braulio Mata","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Trinity Remodeling LLC","cat":"Contractors - Roof","svc":"Roofing","city":"N/A","ph":"(407) 937-9975","ph2":"","email":"trinityremodelingllc@yahoo.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"TrueGreen","cat":"Contractors - Pest Control","svc":"Pest Control / Lawn Treatment","city":"N/A","ph":"","ph2":"(813) 855-4887","email":"","email2":"","contact":"","web":"http://TruGreen.com","notes":"","bbb":"A+ (Acreditado)","google":"1.1/5 (834 reseñas BBB)","dnu":false},{"n":"Tulu","cat":"Contractors - Handyman Services","svc":"Maintenance Platform","city":"N/A","ph":"","ph2":"","email":"jessyca.londono@trytulu.com","email2":"","contact":"Jessica Londono (Ops Manager)","web":"https://www.trytulu.com","notes":"Alba = vendor coordinator","bbb":"NR","google":"N/A","dnu":false},{"n":"Upgrade Painting LLC","cat":"Contractors - Painting","svc":"Painting","city":"Clermont","ph":"(407) 508-6190","ph2":"","email":"alexmoncada552@gmail.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Validus Engineering Group LLC","cat":"Contractors - General","svc":"General Engineering","city":"Polk City","ph":"(813) 785-3779","ph2":"(863) 604-1478","email":"validus_amy@yahoo.com","email2":"","contact":"","web":"https://validusengineering.com","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Vanguard Plumbing Services","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Mulberry","ph":"(863) 281-7988","ph2":"(863) 271-7988","email":"info@vanguardplumbingservice.com","email2":"service@vanguardplumbingair.com","contact":"","web":"http://vanguardplumbingservice.com","notes":"","bbb":"A+ (No Acreditado)","google":"4.7/5 (149 reseñas)","dnu":false},{"n":"Vigo&A LLC","cat":"Contractors - Electrical","svc":"Electrical","city":"Orlando","ph":"(407) 866-4323","ph2":"","email":"mancho7741@icloud.com","email2":"","contact":"","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"Waste Management Inc. of Florida","cat":"Utilities","svc":"Trash","city":"N/A","ph":"(786) 745-3211","ph2":"(800) 796-9696","email":"bgrisham@wm.com","email2":"wm@wm.com","contact":"","web":"https://www.wm.com","notes":"","bbb":"NR","google":"1.3/5 (Sitejabber, 470)","dnu":false},{"n":"Water Works Plumbing LLC","cat":"Contractors - Plumbing","svc":"Plumbing","city":"Ocala","ph":"(352) 598-2557","ph2":"(888) 335-8805","email":"chad@chadswaterworks.com","email2":"scheduling@chadswaterworks.com","contact":"","web":"https://chadswaterworks.com","notes":"","bbb":"NR","google":"4.7/5 (149 reseñas)","dnu":false},{"n":"Weekend Warrior Lawn Kare","cat":"Contractors - Landscaping","svc":"Landscaping","city":"Ocala","ph":"(352) 222-3226","ph2":"","email":"countryboy6665@gmail.com","email2":"","contact":"Patrick Blunt","web":"","notes":"","bbb":"NR","google":"N/A","dnu":false},{"n":"West End Safe & Lock","cat":"Locksmith","svc":"Locksmith/Keys","city":"Winter Garden","ph":"(407) 654-9999","ph2":"","email":"westendsafe@yahoo.com","email2":"","contact":"","web":"https://westendsafeandlock.com/","notes":"","bbb":"A+ (Acreditado)","google":"4.5/5 (49 reseñas)","dnu":false},{"n":"William Dustin Septic","cat":"Contractors - Septic Tank","svc":"Septic Tank","city":"Winter Haven","ph":"(863) 286-4218","ph2":"","email":"","email2":"wdseptic@gmail.com","contact":"","web":"https://williamdustinseptic.com","notes":"","bbb":"NR","google":"4.7/5 (55 reseñas)","dnu":false},{"n":"Window Team","cat":"Windows","svc":"Window Installation","city":"Orlando","ph":"(407) 758-1596","ph2":"(407) 837-9955","email":"vancesar@gmail.com","email2":"sales@windowteam.net","contact":"Cesar Vanegas","web":"https://windowteamorlando.com","notes":"","bbb":"NR","google":"4.2/5 (42 reseñas)","dnu":false},{"n":"City of Apopka","cat":"Utilities","svc":"Municipal Utilities","city":"Apopka","ph":"(407) 703-1727","ph2":"(407) 703-1757","email":"","email2":"ub@apopka.net","contact":"","web":"https://www.apopka.gov","notes":"","bbb":"N/A (Municipal)","google":"N/A","dnu":false},{"n":"City of Casselberry","cat":"Utilities","svc":"Municipal Utilities","city":"Casselberry","ph":"(407) 262-7700","ph2":"","email":"customerservice@casselberry.org","email2":"","contact":"","web":"https://www.casselberry.org","notes":"","bbb":"N/A (Municipal)","google":"N/A","dnu":false},{"n":"City of Cocoa","cat":"Utilities","svc":"Municipal Utilities","city":"Cocoa","ph":"(321) 433-8400","ph2":"","email":"customerservice@cocoafl.gov","email2":"","contact":"","web":"https://www.cocoafl.gov","notes":"","bbb":"N/A (Municipal)","google":"N/A","dnu":false},{"n":"City of Deland","cat":"Utilities","svc":"Municipal Utilities","city":"Deland","ph":"(386) 626-7051","ph2":"","email":"billing@deland.org","email2":"","contact":"","web":"https://www.deland.org","notes":"","bbb":"N/A (Municipal)","google":"N/A","dnu":false},{"n":"City of Lakeland","cat":"Utilities","svc":"Municipal Utilities","city":"Lakeland","ph":"(863) 834-9535","ph2":"","email":"customerservice@lakelandelectric.com","email2":"","contact":"","web":"https://www.lakelandelectric.com","notes":"","bbb":"N/A (Municipal)","google":"N/A","dnu":false},{"n":"City of Melbourne","cat":"Utilities","svc":"Municipal Utilities","city":"Melbourne","ph":"(321) 608-7100","ph2":"","email":"water.sewerbills@mlbfl.org","email2":"","contact":"","web":"https://www.mlbfl.org","notes":"","bbb":"N/A (Municipal)","google":"N/A","dnu":false},{"n":"City of Ocala","cat":"Utilities","svc":"Municipal Utilities","city":"Ocala","ph":"(352) 629-8421","ph2":"","email":"pmcfatten@ocalafl.org","email2":"","contact":"","web":"https://www.ocalafl.org","notes":"","bbb":"N/A (Municipal)","google":"N/A","dnu":false},{"n":"City of Minneola","cat":"Utilities","svc":"Municipal Utilities","city":"Minneola","ph":"(352) 394-3598","ph2":"(352) 267-2673","email":"","email2":"utilitybilling@minneola.us","contact":"","web":"https://www.minneola.us","notes":"","bbb":"N/A (Municipal)","google":"N/A","dnu":false}];
+
+// Populate dropdowns
+const cities=[...new Set(V.map(v=>v.city).filter(c=>c&&c!=='N/A'))].sort();
+const cats=[...new Set(V.map(v=>v.cat))].sort();
+const cityEl=document.getElementById('city'),catEl=document.getElementById('cat');
+cities.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;cityEl.appendChild(o);});
+cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c.replace('Contractors - ','');catEl.appendChild(o);});
+
+let sortCol='n',sortDir=1;
+
+function gScore(g){const m=(g||'').match(/(\d+\.?\d*)\//);return m?parseFloat(m[1]):-1;}
+function bbbTier(b){
+  const u=(b||'').toUpperCase();
+  if(!b||u==='N/A'||u.includes('MUNICIPAL'))return 'nr';
+  if(u.startsWith('A'))return 'good';
+  if(u.startsWith('B'))return 'mid';
+  if(u==='NR')return 'nr';
+  if(u.startsWith('C')||u.startsWith('F'))return 'bad';
+  return 'nr';
+}
+function bbbPill(b){
+  const t=bbbTier(b);
+  const cls={good:'bbb-good',mid:'bbb-mid',bad:'bbb-bad',nr:'bbb-na'}[t];
+  return `<span class="bbb-pill ${cls}">${b||'NR'}</span>`;
+}
+function gPill(g){
+  const s=gScore(g);
+  let cls='g-na';
+  if(s>=4.5)cls='g-high';else if(s>=3.5)cls='g-mid';else if(s>=0)cls='g-low';
+  return `<span class="g-pill ${cls}">${g&&g!=='N/A'?g:'—'}</span>`;
+}
+
+function render(){
+  const q=document.getElementById('q').value.toLowerCase().trim();
+  const city=document.getElementById('city').value;
+  const cat=document.getElementById('cat').value;
+  const bbbF=document.getElementById('bbb').value;
+  const googF=document.getElementById('goog').value;
+  const dnuF=document.getElementById('dnu').value;
+  const grp=document.getElementById('grp').value;
+
+  let f=V.filter(v=>{
+    if(q&&!(v.n+v.city+v.cat+v.svc+v.notes).toLowerCase().includes(q))return false;
+    if(city&&v.city!==city)return false;
+    if(cat&&v.cat!==cat)return false;
+    if(dnuF==='ok'&&v.dnu)return false;
+    if(dnuF==='dnu'&&!v.dnu)return false;
+    if(bbbF){const t=bbbTier(v.bbb);if(t!==bbbF)return false;}
+    if(googF){
+      const s=gScore(v.google);
+      if(googF==='high'&&s<4.5)return false;
+      if(googF==='med'&&(s<3.5||s>=4.5))return false;
+      if(googF==='low'&&(s<0||s>=3.5))return false;
+      if(googF==='na'&&s>=0)return false;
+    }
+    return true;
+  });
+
+  // Sort
+  f.sort((a,b)=>{
+    let av=a[sortCol]||'',bv=b[sortCol]||'';
+    if(sortCol==='google'){av=gScore(a.google);bv=gScore(b.google);}
+    return sortDir*(av<bv?-1:av>bv?1:0);
+  });
+
+  document.getElementById('s-tot').textContent=V.length;
+  document.getElementById('s-vis').textContent=f.length;
+  document.getElementById('s-dnu').textContent=V.filter(v=>v.dnu).length;
+  document.getElementById('s-cit').textContent=new Set(f.map(v=>v.city).filter(c=>c&&c!=='N/A')).size;
+
+  const tbody=document.getElementById('tbody');
+  const empty=document.getElementById('empty');
+  if(!f.length){tbody.innerHTML='';empty.style.display='';return;}
+  empty.style.display='none';
+
+  let html='';
+  if(grp==='none'){
+    f.forEach(v=>{html+=row(v);});
+  } else {
+    const key=grp==='city'?'city':'cat';
+    const groups={};
+    f.forEach(v=>{const k=v[key]||'N/A';(groups[k]=groups[k]||[]).push(v);});
+    Object.keys(groups).sort().forEach(g=>{
+      const label=grp==='cat'?g.replace('Contractors - ',''):g;
+      html+=`<tr class="grp-row"><td colspan="9">📍 ${label} — ${groups[g].length} vendor${groups[g].length!==1?'s':''}</td></tr>`;
+      groups[g].forEach(v=>{html+=row(v);});
+    });
+  }
+  tbody.innerHTML=html;
+}
+
+function row(v){
+  const dnuB=v.dnu?`<span class="dnu-flag">⛔ Do Not Use</span> `:'';
+  const ph=[v.ph,v.ph2].filter(Boolean).join('<br>');
+  const em=[v.email&&`<a href="mailto:${v.email}">${v.email}</a>`,v.email2&&`<a href="mailto:${v.email2}">${v.email2}</a>`].filter(Boolean).join('<br>');
+  const web=v.web?`<a class="web-link" href="${v.web.startsWith('http')?v.web:'https://'+v.web}" target="_blank">↗ Sitio web</a>`:'';
+  return `<tr class="${v.dnu?'dnu-row':''}">
+    <td><div class="vendor-name">${dnuB}${v.n}</div><div class="vendor-svc">${v.svc}</div></td>
+    <td><span class="city-badge">${v.city!=='N/A'?v.city:'—'}</span></td>
+    <td><span class="cat-pill" title="${v.cat}">${v.cat.replace('Contractors - ','')}</span></td>
+    <td>${bbbPill(v.bbb)}</td>
+    <td>${gPill(v.google)}</td>
+    <td><div class="contact-cell">${v.contact?`<span>👤 ${v.contact}</span>`:''}${em}</div></td>
+    <td><div class="contact-cell"><span>${ph||'—'}</span></div></td>
+    <td>${web}</td>
+    <td><div class="notes-cell">${v.notes||''}</div></td>
+  </tr>`;
+}
+
+// Sort click
+document.querySelectorAll('th[data-col]').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const col=th.dataset.col;
+    if(sortCol===col)sortDir*=-1;else{sortCol=col;sortDir=1;}
+    document.querySelectorAll('th').forEach(t=>t.classList.remove('sorted'));
+    th.classList.add('sorted');
+    th.querySelector('.sort-icon').textContent=sortDir===1?'↑':'↓';
+    render();
+  });
+});
+
+['q','city','cat','bbb','goog','dnu','grp'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',render);
+});
+render();
+</script>
+</body>
+</html>
